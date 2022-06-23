@@ -3,8 +3,10 @@ const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Query: {
-    me: async () => {
-      return User.find().select('-__v -password').populate('books');
+    me: async (parent, { username }) => {
+      return User.findOne({ username })
+        .select('-__v -password')
+        .populate('books');
     },
   },
   Mutation: {
@@ -28,6 +30,8 @@ const resolvers = {
 
       return user;
     },
+    saveBook: async () => {},
+    removeBook: async () => {},
   },
 };
 
